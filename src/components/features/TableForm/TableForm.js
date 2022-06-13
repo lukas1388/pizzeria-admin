@@ -1,5 +1,5 @@
 import { Form, Button, Col, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateTableRequest, getTableById } from "../../../redux/tablesRedux";
 import { useState } from "react";
@@ -9,6 +9,7 @@ const TableForm = () => {
     const { id } = useParams();  
     const table = useSelector(state => getTableById(state, parseInt(id)));
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [status, setStatus] = useState(table.status);
     const [peopleAmount, setPeopleAmount] = useState(table.peopleAmount);
     const [maxPeopleAmount, setMaxPeopleAmount] = useState(table.maxPeopleAmount);
@@ -17,6 +18,7 @@ const TableForm = () => {
     const handleSubmit = e => {
         e.preventDefault();
         dispatch(updateTableRequest({ id, status, peopleAmount: parseInt(peopleAmount), maxPeopleAmount: parseInt(maxPeopleAmount), bill: parseInt(bill) }));
+        navigate('/');
     }
 
     return (
