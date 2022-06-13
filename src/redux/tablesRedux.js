@@ -18,6 +18,8 @@ export const fetchTables = () => {
 };
 
 export const updateTableRequest = (newTable) => {
+  let id = newTable.id;
+  let urlId = 'http://localhost:3131/tables/' + id;
   return (dispatch) => {
     const options = {
       method: 'PUT',
@@ -26,7 +28,7 @@ export const updateTableRequest = (newTable) => {
       },
       body: JSON.stringify({ ...newTable }),
     };
-    fetch('http://localhost:3131/tables', options)
+    fetch(urlId, options)
     .then(() => dispatch(updateTables(newTable)))
   }
 }

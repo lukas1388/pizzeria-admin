@@ -16,7 +16,7 @@ const TableForm = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(updateTableRequest({ status, peopleAmount, maxPeopleAmount, bill }));
+        dispatch(updateTableRequest({ id, status, peopleAmount: parseInt(peopleAmount), maxPeopleAmount: parseInt(maxPeopleAmount), bill: parseInt(bill) }));
     }
 
     return (
@@ -28,10 +28,10 @@ const TableForm = () => {
                 </Form.Label>
                 <Col sm='9' className='mb-3'>
                     <Form.Select size='md' value={status} onChange={e => setStatus(e.target.value)}>
-                        <option value='free'>Free</option>
-                        <option value='reserved'>Reserved</option>
-                        <option value='busy'>Busy</option>
-                        <option value='cleaning'>Cleaning</option>
+                        <option value='Free'>Free</option>
+                        <option value='Reserved'>Reserved</option>
+                        <option value='Busy'>Busy</option>
+                        <option value='Cleaning'>Cleaning</option>
                     </Form.Select>
                 </Col>
                 <Form.Label column sm='3'>
