@@ -21,7 +21,8 @@ export const fetchTables = () => {
   }
 };
 
-export const updateTableRequest = ({id, status, peopleAmount, maxPeopleAmount, bill }) => {
+export const updateTableRequest = (newTable) => {
+  let id = newTable.id;
   let urlId = `${API_URL}/tables/${id}`;
   return (dispatch) => {
     const options = {
@@ -29,16 +30,10 @@ export const updateTableRequest = ({id, status, peopleAmount, maxPeopleAmount, b
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        id: id,
-        status: status,
-        peopleAmount: peopleAmount,
-        maxPeopleAmount: maxPeopleAmount,
-        bill: bill
-      }),
+      body: JSON.stringify({ ...newTable }),
     };
     fetch(urlId, options)
-    .then(() => dispatch(editTable(options)))
+    .then(() => dispatch(editTable(newTable)))
   }
 }
 
@@ -46,8 +41,8 @@ const tablesReducer = (statePart = [], action) => {
   switch (action.type) {
     case UPDATE_TABLES:
       return [...action.payload];
-    case EDIT_TABLE:
-      return [{ ...action.payload }];
+      case EDIT_TABLE:
+        return statePart.map(table => (table.id === action.payload.tableId) ? {...table, status: action.payload.statusState, peopleAmount:action.payload.people, maxPeopleAmount:action.payload.peopleMax, bill:action.payload.bill } : table);
     default:
       return statePart;
   };
