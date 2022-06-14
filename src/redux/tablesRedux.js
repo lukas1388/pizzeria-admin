@@ -34,7 +34,6 @@ export const updateTableRequest = (newTable) => {
     };
     fetch(urlId, options)
       .then(() => dispatch(editTable(newTable)))
-      .then(tables => dispatch(updateTables(tables)));
   }
 };
 
@@ -43,7 +42,7 @@ const tablesReducer = (statePart = [], action) => {
     case UPDATE_TABLES:
       return [...action.payload];
       case EDIT_TABLE:
-        return statePart.map(table => (table.id === action.payload.id ? {...table, ...action.payload } : table ));
+        return [...statePart, {...action.payload}];
     default:
       return statePart;
   };
