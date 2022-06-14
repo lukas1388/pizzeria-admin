@@ -35,7 +35,6 @@ const TableForm = () => {
             setPeopleAmount(0);
             setBill(0);
         } else {
-            setStatus(table.status);
             setPeopleAmount(table.peopleAmount);
             setMaxPeopleAmount(table.maxPeopleAmount);
             setBill(table.bill);
