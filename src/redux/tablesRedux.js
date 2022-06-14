@@ -30,10 +30,11 @@ export const updateTableRequest = (newTable) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ ...newTable }),
+      body: JSON.stringify(newTable),
     };
     fetch(urlId, options)
     .then(() => dispatch(editTable(newTable)))
+    .then(() => dispatch(updateTables(newTable)))
   }
 }
 
