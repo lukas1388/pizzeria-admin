@@ -31,9 +31,9 @@
     {
       "id": 5,
       "status": "Cleaning",
-      "peopleAmount": 0,
+      "peopleAmount": 3,
       "maxPeopleAmount": 3,
-      "bill": 0
+      "bill": 30
     }
   ]
 }

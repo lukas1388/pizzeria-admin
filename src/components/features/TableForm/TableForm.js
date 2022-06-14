@@ -21,6 +21,40 @@ const TableForm = () => {
         navigate('/');
     }
 
+    const validationStatus = status => {
+        if(status === 'Busy'){
+            setBill(0);
+            setStatus(status);
+        } else if(status === 'Cleaning' || status === 'Free') {
+            setPeopleAmount(0);
+            setBill(0);
+            setStatus(status);
+        } else {
+            setStatus(status);
+        }
+    }
+
+    const validationPeopleAmount = value => {
+        if (value <= 0){
+          setPeopleAmount(0);
+        } else if (value > maxPeopleAmount) {
+          setPeopleAmount(0);
+        } else {
+          setPeopleAmount(value);
+        }
+      };
+      
+    const validationMaxPeopleAmount = value => {
+        if (peopleAmount >= value) {
+            setPeopleAmount(value);
+            setMaxPeopleAmount(value);
+        } else if (value > 10){
+            setMaxPeopleAmount(10);
+        } else {
+          setMaxPeopleAmount(value);
+        }
+    };
+
     return (
         <Form key={table.id} className='d-flex justify-content-start m-2' onSubmit={handleSubmit}>
             <Form.Group as={Row} style={{ maxWidth: '300px' }}>
@@ -29,7 +63,7 @@ const TableForm = () => {
                     <span className='fw-bold'>Status:</span>
                 </Form.Label>
                 <Col sm='9' className='mb-3'>
-                    <Form.Select size='md' value={status} onChange={e => setStatus(e.target.value)}>
+                    <Form.Select size='md' value={status} onChange={e => validationStatus(e.target.value)}>
                         <option value='Free'>Free</option>
                         <option value='Reserved'>Reserved</option>
                         <option value='Busy'>Busy</option>
@@ -40,9 +74,9 @@ const TableForm = () => {
                     <span className='fw-bold'>People:</span>
                 </Form.Label>
                 <Col sm='9' className='d-flex mb-3'>
-                    <Form.Control value={peopleAmount} onChange={e => setPeopleAmount(e.target.value)} className='text-center' style={{ maxWidth: '50px' }} />
+                    <Form.Control value={peopleAmount} onChange={e => validationPeopleAmount(e.target.value)} className='text-center' style={{ maxWidth: '50px' }} />
                         <span className='mx-1 my-auto' style={{ fontSize: '20px' }}>/</span>
-                    <Form.Control value={maxPeopleAmount} onChange={e => setMaxPeopleAmount(e.target.value)} className='text-center' style={{ maxWidth: '50px' }} />
+                    <Form.Control value={maxPeopleAmount} onChange={e => validationMaxPeopleAmount(e.target.value)} className='text-center' style={{ maxWidth: '50px' }} />
                 </Col>
                 <Form.Label column sm='3'>
                     <span className='fw-bold'>Bill:</span>
