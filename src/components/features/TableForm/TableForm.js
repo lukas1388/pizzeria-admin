@@ -2,18 +2,45 @@ import { Form, Button, Col, Row } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { updateTableRequest, getTableById } from "../../../redux/tablesRedux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const TableForm = () => {
 
-    const { id } = useParams();  
-    const table = useSelector(state => getTableById(state, parseInt(id)));
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [status, setStatus] = useState(table.status);
-    const [peopleAmount, setPeopleAmount] = useState(table.peopleAmount);
-    const [maxPeopleAmount, setMaxPeopleAmount] = useState(table.maxPeopleAmount);
-    const [bill, setBill] = useState(table.bill);
+
+    const { id } = useParams();  
+    const table = useSelector(state => getTableById(state, parseInt(id)));
+
+    const [status, setStatus] = useState('Busy');
+    const [peopleAmount, setPeopleAmount] = useState(0);
+    const [maxPeopleAmount, setMaxPeopleAmount] = useState(0);
+    const [bill, setBill] = useState(0);
+
+    // When table loads -> update local state
+    useEffect(() => {
+        if(table) {
+            setStatus(table.status);
+            setPeopleAmount(table.peopleAmount);
+            setMaxPeopleAmount(table.maxPeopleAmount);
+            setBill(table.bill);
+        }
+    }, [table]);
+
+    // If status changes busy, 
+    useEffect(() => {
+        if(status === 'Busy'){
+            setBill(0);
+        } else if(status === 'Cleaning' || status === 'Free') {
+            setPeopleAmount(0);
+            setBill(0);
+        } else {
+            setStatus(table.status);
+            setPeopleAmount(table.peopleAmount);
+            setMaxPeopleAmount(table.maxPeopleAmount);
+            setBill(table.bill);
+        }
+    }, [status]);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -21,20 +48,7 @@ const TableForm = () => {
         navigate('/');
     }
 
-    const validationStatus = status => {
-        if(status === 'Busy'){
-            setBill(0);
-            setStatus(status);
-        } else if(status === 'Cleaning' || status === 'Free') {
-            setPeopleAmount(0);
-            setBill(0);
-            setStatus(status);
-        } else {
-            setStatus(status);
-        }
-    }
-
-    const validationPeopleAmount = value => {
+    const updatePeopleAmount = value => {
         if (value <= 0){
           setPeopleAmount(0);
         } else if (value > maxPeopleAmount) {
@@ -44,7 +58,7 @@ const TableForm = () => {
         }
       };
       
-    const validationMaxPeopleAmount = value => {
+    const updateMaxPeopleAmount = value => {
         if (peopleAmount >= value) {
             setPeopleAmount(value);
             setMaxPeopleAmount(value);
@@ -63,7 +77,7 @@ const TableForm = () => {
                     <span className='fw-bold'>Status:</span>
                 </Form.Label>
                 <Col sm='9' className='mb-3'>
-                    <Form.Select size='md' value={status} onChange={e => validationStatus(e.target.value)}>
+                    <Form.Select size='md' value={status} onChange={e => setStatus(e.target.value)}>
                         <option value='Free'>Free</option>
                         <option value='Reserved'>Reserved</option>
                         <option value='Busy'>Busy</option>
@@ -74,9 +88,9 @@ const TableForm = () => {
                     <span className='fw-bold'>People:</span>
                 </Form.Label>
                 <Col sm='9' className='d-flex mb-3'>
-                    <Form.Control value={peopleAmount} onChange={e => validationPeopleAmount(e.target.value)} className='text-center' style={{ maxWidth: '50px' }} />
+                    <Form.Control value={peopleAmount} onChange={e => updatePeopleAmount(e.target.value)} className='text-center' style={{ maxWidth: '50px' }} />
                         <span className='mx-1 my-auto' style={{ fontSize: '20px' }}>/</span>
-                    <Form.Control value={maxPeopleAmount} onChange={e => validationMaxPeopleAmount(e.target.value)} className='text-center' style={{ maxWidth: '50px' }} />
+                    <Form.Control value={maxPeopleAmount} onChange={e => updateMaxPeopleAmount(e.target.value)} className='text-center' style={{ maxWidth: '50px' }} />
                 </Col>
                 <Form.Label column sm='3'>
                     <span className='fw-bold'>Bill:</span>
