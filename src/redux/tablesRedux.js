@@ -31,7 +31,7 @@ export const updateTableRequest = (newTable) => {
       body: JSON.stringify({ ...newTable }),
     };
     fetch(urlId, options)
-    .then(() => dispatch(updateTables(newTable)))
+    .then(() => dispatch(updateTables({ newTable })))
   }
 }
 
