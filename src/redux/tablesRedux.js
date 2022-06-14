@@ -21,8 +21,7 @@ export const fetchTables = () => {
   }
 };
 
-export const updateTableRequest = (newTable) => {
-  let id = newTable.id;
+export const updateTableRequest = ({id, status, peopleAmount, maxPeopleAmount, bill }) => {
   let urlId = `${API_URL}/tables/${id}`;
   return (dispatch) => {
     const options = {
@@ -30,10 +29,16 @@ export const updateTableRequest = (newTable) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ ...newTable }),
+      body: JSON.stringify({
+        id: id,
+        status: status,
+        peopleAmount: peopleAmount,
+        maxPeopleAmount: maxPeopleAmount,
+        bill: bill
+      }),
     };
     fetch(urlId, options)
-    .then(() => dispatch(editTable(newTable)))
+    .then(() => dispatch(editTable(options)))
   }
 }
 

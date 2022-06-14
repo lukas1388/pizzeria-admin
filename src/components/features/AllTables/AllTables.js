@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { getAllTables } from "../../../redux/tablesRedux";
 import { ListGroup, Button, Spinner } from "react-bootstrap";
 import { Link } from 'react-router-dom';
+import shortid from "shortid";
 
 const AllTables = () => {
 
@@ -17,7 +18,7 @@ const AllTables = () => {
     return (
         <ListGroup variant="flush">
             {tables.map( table =>
-                <ListGroup.Item key={table.id} className="py-3 d-flex justify-content-between">
+                <ListGroup.Item key={shortid()} className="py-3 d-flex justify-content-between">
                     <div className="d-flex align-items-center">
                         <h3>Table: {table.id}</h3>
                         <span className='mx-2'></span>

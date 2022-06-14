@@ -3,9 +3,9 @@
     {
       "id": 1,
       "status": "Reserved",
-      "peopleAmount": 1,
-      "maxPeopleAmount": 2,
-      "bill": 12
+      "peopleAmount": 3,
+      "maxPeopleAmount": 7,
+      "bill": 37
     },
     {
       "id": 2,
