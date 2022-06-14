@@ -33,10 +33,10 @@ export const updateTableRequest = (newTable) => {
       body: JSON.stringify(newTable),
     };
     fetch(urlId, options)
-    .then(() => dispatch(editTable({...newTable})))
-    .then(() => dispatch(updateTables()))
+      .then(() => dispatch(editTable(newTable)))
+      .then(tables => dispatch(updateTables(tables)));
   }
-}
+};
 
 const tablesReducer = (statePart = [], action) => {
   switch (action.type) {
