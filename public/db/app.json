@@ -3,14 +3,14 @@
     {
       "id": 1,
       "status": "Free",
-      "peopleAmount": 2,
-      "maxPeopleAmount": 5,
-      "bill": 25
+      "peopleAmount": 3,
+      "maxPeopleAmount": 6,
+      "bill": 0
     },
     {
       "id": 2,
       "status": "Cleaning",
-      "peopleAmount": 4,
+      "peopleAmount": 5,
       "maxPeopleAmount": 6,
       "bill": 50
     },
@@ -24,7 +24,7 @@
     {
       "id": 4,
       "status": "Free",
-      "peopleAmount": 0,
+      "peopleAmount": 2,
       "maxPeopleAmount": 3,
       "bill": 0
     },
@@ -32,7 +32,7 @@
       "id": 5,
       "status": "Cleaning",
       "peopleAmount": 3,
-      "maxPeopleAmount": 3,
+      "maxPeopleAmount": 4,
       "bill": 30
     }
   ]
