@@ -1,11 +1,18 @@
 import { useSelector } from "react-redux";
 import { getAllTables } from "../../../redux/tablesRedux";
-import { ListGroup, Button } from "react-bootstrap";
+import { ListGroup, Button, Spinner } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 
 const AllTables = () => {
 
     const tables = useSelector(getAllTables);
+
+    if (tables.length === 0)
+    return (
+      <div className='text-center'>
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
 
     return (
         <ListGroup variant="flush">
