@@ -42,7 +42,7 @@ const tablesReducer = (statePart = [], action) => {
     case UPDATE_TABLES:
       return [...action.payload];
       case EDIT_TABLE:
-        return [...statePart, {...action.payload}];
+        return [statePart, {...action.payload}];
     default:
       return statePart;
   };
